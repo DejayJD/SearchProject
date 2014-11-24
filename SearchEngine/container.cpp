@@ -44,4 +44,19 @@ Node* Container::search(string word) {
     }
 }
 
+bool Container::contains(string word) {
+    int hTableKey = index.hashFunction(word, 0);
+    if(!index.hasElement(hTableKey)) {  //make sure that table for that key exists
+        return false;
+    }
+    int aTableKey = index.getAVLTable(hTableKey)->hashFunction(word);
+    if(!index.getAVLTable(hTableKey)->hasElement(aTableKey))    //make sure that table for that key exists
+        return false;
+    if(index.getAVLTable(hTableKey)->getAVLTree(aTableKey)->contains(word)) {   //check if word exists in tree
+        return true;
+    }
+    else {      //if word doesn't exists
+        return false;
+    }
+}
 

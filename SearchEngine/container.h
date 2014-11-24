@@ -11,6 +11,7 @@ public:
     Container();
     void insert(string, int);   //insert word with the id
     Node* search(string);       //search for the word
+    bool contains(string);
 
     int getwordcount() {
         return wordcount;
