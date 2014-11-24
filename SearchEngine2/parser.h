@@ -29,6 +29,7 @@ private: // Member Variables
     ifstream read;
     vector <string> stopwords;
     vector <string> words;
+
     string buffer;
     set<string> wordSet;
     AVLTree <string> avl;
@@ -38,6 +39,7 @@ private: // Member Variables
     custom_container cc;
 public: // Member Variables
     int count;
+    vector <Node*> nodes;
 
 public: // Constructor || Destructor
     Parser();
@@ -77,29 +79,34 @@ public: // Templated Function
         for( ; q != NULL; q = strpbrk(p, delims) )
         {
             string data = typename C::value_type(p, q);
-            //data.erase(remove_if(data.begin(), data.end(), ::isspace ), data.end());
+            data.erase(remove_if(data.begin(), data.end(), ::isspace ), data.end());
             transform(data.begin(), data.end(), data.begin(), ::tolower);
             //cout << typename C::value_type(p, q) << endl;
-            if (wordSet.count(data) == 0 && data.size() > 2)
+            if (data.size() > 2 && wordSet.count(data) == 0)
             {
-                //words.push_back(data);
+                words.push_back(data);
+                //nodes.push_back(new Node(data, page->getId()));
                 //if(container.contains(data))
-//                if (cc.contains(data))
-//                {
-//                    cout << "container contains " << data << "! Inserting id: " << page->getId() << endl;
-//                    //container.search(data)->insertId(page->getId());
-//                    cc.search(data)->insertId(page->getId());
-//                }
-//                else
-//                {
-//                    cout << "container doesn't contain " << data << "! Creating new Node " << data << " with id :" << page->getId() << endl;
-//                    //container.insertNewWord(data, page->getId());
-//                    cc.insert(data, page->getId());
-//                    //count += 1;
-//                    //cout << "number of words inside cc : " << count << endl;
-//                }
+                //{
+                //if (cc.contains(data))
+                //{
+                    //cout << "container contains " << data << "! Inserting id: " << page->getId() << endl;
+                    //container.search(data)->insertId(page->getId());
+                    //cc.search(data)->insertId(page->getId());
+                    //container.avl.current->data->getIds().insert(page->getId());
+
+                //}
+                //else
+                //{
+                    //cout << "container doesn't contain " << data << "! Creating new Node " << data << " with id :" << page->getId() << endl;
+                    //container.insertNewWord(data, page->getId());
+                    //cc.insert(data, page->getId());
+                    //count += 1;
+                    //cout << "number of words inside cc : " << count << endl;
+                //}
                 //cout << "inserting " << data << " and id: " << page->getId() << endl;
-                cc.insert(data, page->getId());
+                //cc.insert(data, page->getId());
+                //cout << cc.getwordcount() << endl;
             }
 
             p = q + 1;

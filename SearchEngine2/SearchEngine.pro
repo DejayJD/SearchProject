@@ -11,7 +11,9 @@ SOURCES += main.cpp \
     indexinterface.cpp \
     custom_container.cpp \
     hashtable.cpp \
-    avltable.cpp
+    avltable.cpp \
+    porter2stemmer.cpp \
+    linkedlist_container.cpp
 
 HEADERS += \
     container.h \
@@ -27,7 +29,9 @@ HEADERS += \
     AVLString.h \
     custom_container.h \
     hashtable.h \
-    avltable.h
+    avltable.h \
+    porter2stemmer.h \
+    linkedlist_container.h
 
 macx {
     QMAKE_CXXFLAGS += -std=c++11

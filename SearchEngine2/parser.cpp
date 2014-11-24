@@ -214,7 +214,7 @@ void Parser::readThrough()
         //cout << page->getTitle() << endl;
         //cout << page->getText() << endl;
         store();
-        cout << "pages: " << count << endl;
+        //cout << "pages: " << count << endl;
     }
 }
 string& Parser::getTitle()

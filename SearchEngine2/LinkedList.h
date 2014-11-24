@@ -111,8 +111,17 @@ public : // Member Functions
             cur = cur->next;
             tail = cur;
             tail->next = nullptr;
+            position = tail;
         }
         length += 1;
+    }
+
+    void _insert(T data)
+    {
+        Node *nodePtr = new Node(data);
+        position->next = nodePtr;
+        tail = position->next;
+        position = tail;
     }
 
     // removes a data from the linkedlist
@@ -251,6 +260,15 @@ public : // Member Functions
                 return true;
         }
         return false;
+    }
+    bool empty()
+    {
+        if (length == 0)
+        {
+            return true;
+        }
+        else
+            return false;
     }
 };
 #endif // LINKEDLIST_H

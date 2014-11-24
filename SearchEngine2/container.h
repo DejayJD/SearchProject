@@ -12,8 +12,9 @@ class Container
 {
 
 private: // Member Variables
-    AVLTree <Node*> avl;
+
 public: // Constructor
+    AVLTree <Node*> avl;
     Container()
     {
 

@@ -46,6 +46,12 @@ public:
         return out;
     }
 
+    friend ostream& operator<<(ostream& out, const Node* node)
+    {
+        out << node->word;
+        return out;
+    }
+
     void incrementFrequency()
     {
         frequency += 1;

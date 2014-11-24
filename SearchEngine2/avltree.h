@@ -38,7 +38,9 @@ private:
 
 private: // Member Variables
     AVLNode *root;
+
 public : // Constructor || Destructor
+    AVLNode *current;
     AVLTree()
     {
         root = nullptr;
@@ -114,7 +116,11 @@ public : // Member Functions
     bool contains(string& data)
     {
         if (root == nullptr) return false;
-        else if (root->data->getWord() == data) return true;
+        else if (root->data->getWord() == data)
+        {
+            current = root;
+            return true;
+        }
         else
         {
             if (data > root->data->getWord())
@@ -148,7 +154,11 @@ public : // Member Functions
     Node*& search(string& data)
     {
         if (root == nullptr) cerr << "no data" << endl;
-        else if (root->data->getWord() == data) return root->data;
+        else if (root->data->getWord() == data)
+        {
+
+            return root->data;
+        }
         else
         {
             if (data > root->data->getWord())
@@ -270,7 +280,11 @@ private: // Member Functions
      bool _contains(string& data, AVLNode*& node)
      {
          if (node == nullptr) return false;
-         else if (node->data->getWord() == data) return true;
+         else if (node->data->getWord() == data)
+         {
+             current = node;
+             return true;
+         }
          else
          {
              if (data > node->data->getWord())
