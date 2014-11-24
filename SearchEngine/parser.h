@@ -4,9 +4,8 @@
 #include <avltree.h>
 #include <page.h>
 
-//#include <pugixml.hpp>
 #include <container.h>
-//#include <boost/algorithm/string.hpp>
+#include <custom_container.h>
 //#include <stemmer.h>
 
 #include <bitset>
@@ -25,15 +24,17 @@ using namespace std;
 class Parser
 {
 private: // Member Variables
+    char const* delims = " \t[],-'/\\!%&=()<>?{}|._\n:;#~*+@^•—¡¿”“";
     ifstream read;
     vector <string> stopwords;
+    vector <string> words;
     string buffer;
     set<string> wordSet;
     AVLTree <string> avl;
 
     Page* page;
     Container container;
-
+    custom_container cc;
 public: // Member Variables
     int count;
 
@@ -51,9 +52,11 @@ public: // Member Functions
     string& getTitle();
     string& getText();
     set <string> &getWordSet();
+    vector <string> &getWords();
 
     void store();
-
+    Container &getContainer();
+    custom_container &getCustom_Container();
 
 private:
     string readContent(ifstream& read, string tag);
@@ -66,43 +69,41 @@ public: // Templated Function
     template<typename C>
     void custom_strpbrk(string const& s, char const* delims, C& ret)
     {
-      C output;
+        C output;
 
-      char const* p = s.c_str();
-      char const* q = strpbrk(p+1, delims);
-      for( ; q != NULL; q = strpbrk(p, delims) )
-      {
-          string data = typename C::value_type(p, q);
-          transform(data.begin(), data.end(), data.begin(), ::tolower);
-        if (wordSet.count(data) == 0)
+        char const* p = s.c_str();
+        char const* q = strpbrk(p+1, delims);
+        for( ; q != NULL; q = strpbrk(p, delims) )
         {
-              //cout << data << " isn't' a stopword" << endl;
-              //output.push_back(data);
-              //avl.insert(data);
-//            char* word = new char[data.size()];
-//            strcat(word, data.c_str());
-//            data[stem(word, 0, data.size() - 1) + 1] = 0;
-//            delete word;
-              if (container.contains(data))
-              {
-                  //cout << "OOPS " << data << " already exists!" << endl;
-                  container.search(data)->insertId(page->getId());
-                  //cout << "insert id : " << page->getId() << "to " << data << endl;
-              }
-              else
-              {
-                  container.insertNewWord(data, page->getId());
-                  //cout << "insert : " << data << endl;
-                  //container.search(data)->insertId(page->getId());
-                  //cout << "insert id : " << page->getId() << " to " << data << endl;
-              }
-        }
-        //else
-            //cout << "deleting stopword " << data << " from string" << endl;
-        p = q + 1;
-      }
+            string data = typename C::value_type(p, q);
+            //data.erase(remove_if(data.begin(), data.end(), ::isspace ), data.end());
+            transform(data.begin(), data.end(), data.begin(), ::tolower);
+            //cout << typename C::value_type(p, q) << endl;
+            if (wordSet.count(data) == 0 && data.size() > 2)
+            {
+                //words.push_back(data);
+                //if(container.contains(data))
+//                if (cc.contains(data))
+//                {
+//                    cout << "container contains " << data << "! Inserting id: " << page->getId() << endl;
+//                    //container.search(data)->insertId(page->getId());
+//                    cc.search(data)->insertId(page->getId());
+//                }
+//                else
+//                {
+//                    cout << "container doesn't contain " << data << "! Creating new Node " << data << " with id :" << page->getId() << endl;
+//                    //container.insertNewWord(data, page->getId());
+//                    cc.insert(data, page->getId());
+//                    //count += 1;
+//                    //cout << "number of words inside cc : " << count << endl;
+//                }
+                //cout << "inserting " << data << " and id: " << page->getId() << endl;
+                cc.insert(data, page->getId());
+            }
 
-      //output.swap(ret);
+            p = q + 1;
+        }
+        //output.swap(ret);
     }
 };
 

@@ -107,10 +107,19 @@ string Parser::readContent(ifstream& read, string tag)
 string Parser::readText(ifstream& read)
 {
     string text;
+    string word;
     char c;
     c = read.get();
     while (c != '<')
     {
+        if(c > 127 || c < 0)
+        {
+            while (c > 127 || c < 0)
+            {
+                c = read.get();
+            }
+        }
+
         if(c == '[')
         {
             c = read.get();
@@ -128,6 +137,7 @@ string Parser::readText(ifstream& read)
             }
             c = read.get();
         }
+
         if(c == '{')
         {
             c = read.get();
@@ -145,25 +155,34 @@ string Parser::readText(ifstream& read)
             }
             c = read.get();
         }
-        if (c == '&')
-        {
-            c = read.get();
-            if (c == 'g' || c == 'l' || c == 'q' || c == 'a')
-            {
-                while (c != ';')
-                {
-                    c = read.get();
-                }
-                c = read.get();
-            }
-            else
-            {
-                break;
-            }
-            c = read.get();
-        }
+//        if (c == '&')
+//        {
+//            c = read.get();
+//            if (c == 'g' || c == 'l' || c == 'q' || c == 'a')
+//            {
+//                while (c != ';')
+//                {
+//                    c = read.get();
+//                }
+//                c = read.get();
+//            }
+//            else
+//            {
+//                break;
+//            }
+//            c = read.get();
+//        }
         text.push_back(c);
+//        word.push_back(c);
+//        if (c == ' ')
+//        {
+//            //word.erase(remove_if( word.begin(), word.end(), ::isspace ), word.end() );
+//            //transform(word.begin(), word.end(), word.begin(), ::tolower);
+//            custom_strpbrk(word, delims, words);
+//            word.clear();
+//        }
         c = read.get();
+
     }
     return text;
 }
@@ -185,11 +204,19 @@ void Parser::closeFile()
 }
 void Parser::readThrough()
 {
+    count = 0;
     while(!read.eof())
     {
+        count += 1;
+
         readPage();
+        //cout << page->getText() << endl;
+        //cout << page->getTitle() << endl;
+        //cout << page->getText() << endl;
         store();
+        //cout << "pages: " << count << endl;
     }
+
 }
 string& Parser::getTitle()
 {
@@ -207,10 +234,20 @@ set <string> &Parser::getWordSet()
 
 void Parser::store()
 {
-    typedef string::const_iterator iter;
-    //typedef boost::iterator_range<iter> string_view;
-    char const* delims = " \t[],-'/\\!\"§$%&=()<>?{}|._\n:";
-    vector <string> array;
-    custom_strpbrk(page->getText(), delims, array);
+    custom_strpbrk(page->getText(), delims, words);
+
 }
 
+vector <string> &Parser::getWords()
+{
+    return words;
+}
+Container &Parser::getContainer()
+{
+    return container;
+}
+
+custom_container &Parser::getCustom_Container()
+{
+    return cc;
+}
