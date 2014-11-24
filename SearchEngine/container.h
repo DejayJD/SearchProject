@@ -1,51 +1,28 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
-#include <vector>
-#include <string>
-#include <node.h>
-#include <avltree.h>
-
-using namespace std;
+#include "avltable.h"
+#include "avltree.h"
+#include "hashtable.h"
 
 
 class Container
 {
+public:
+    Container();
+    void insert(string, int);   //insert word with the id
+    Node* search(string);       //search for the word
 
-private: // Member Variables
-    AVLTree <Node*> avl;
-public: // Constructor
-    Container()
-    {
-
+    int getwordcount() {
+        return wordcount;
     }
-
-public: // Member Functions
-    void insertNewWord(string& word)
-    {
-        avl.insert(new Node(word));
+    int getinsertcount() {
+        return insertcount;
     }
 
-    void insertNewWord(string& word, int id)
-    {
-        avl.insert(new Node(word, id));
-    }
-
-    bool contains(string& word)
-    {
-        return avl.contains(word);
-    }
-
-    Node*& search(string& word)
-    {
-        return avl.search(word);
-    }
-    void insertId()
-    {
-    }
-    AVLTree <Node*> &getContainer()
-    {
-        return avl;
-    }
+private:
+    hashTable index;
+    int wordcount; //delete later
+    int insertcount; //delete later
 };
 
 #endif // CONTAINER_H
