@@ -5,7 +5,6 @@
 #include <page.h>
 
 #include <container.h>
-#include <custom_container.h>
 //#include <stemmer.h>
 
 #include <bitset>
@@ -34,7 +33,6 @@ private: // Member Variables
 
     Page* page;
     Container container;
-    custom_container cc;
 public: // Member Variables
     int count;
 
@@ -56,7 +54,6 @@ public: // Member Functions
 
     void store();
     Container &getContainer();
-    custom_container &getCustom_Container();
 
 private:
     string readContent(ifstream& read, string tag);
@@ -98,7 +95,7 @@ public: // Templated Function
 //                    //cout << "number of words inside cc : " << count << endl;
 //                }
                 //cout << "inserting " << data << " and id: " << page->getId() << endl;
-                cc.insert(data, page->getId());
+                container.insert(data, page->getId());
             }
 
             p = q + 1;

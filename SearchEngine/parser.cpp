@@ -247,7 +247,4 @@ Container &Parser::getContainer()
     return container;
 }
 
-custom_container &Parser::getCustom_Container()
-{
-    return cc;
-}
+
