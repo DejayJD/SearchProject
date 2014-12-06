@@ -1,6 +1,7 @@
 #ifndef QUERY_H
 #define QUERY_H
 #include <iostream>
+#include <sstream>
 
 
 class Query
@@ -11,7 +12,7 @@ public:
     Query();
     ~Query();
     void printResults(int); //print number of results by the integer
-    void processQueries(string* lstrings, string* rstrings);
+    void processQueries(string);
     vector<int> queryAnd(vector<int>, vector<int>);
     vector<int> queryOr(vector<int>, vector<int>);
     vector<int> queryNot(vector<int>, vector<int>);
