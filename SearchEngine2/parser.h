@@ -6,7 +6,6 @@
 
 #include <container.h>
 #include <custom_container.h>
-#include <boost/algorithm/string.hpp>
 //#include <stemmer.h>
 
 #include <bitset>

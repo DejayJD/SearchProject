@@ -36,14 +36,14 @@ int main(int argc, char** argv)
     cout << "File Closed" << endl;
     cout << "There are " << p.count << " pages parsed!" << endl;
 
-    string word = "textbook";
+    string word = "firefighter";
     cout << "Search the indes for: " << p.getCustom_Container().search(word).getWord() << endl;
     cout << "Page Ids containing " << word << " are:" << endl;
     typedef unordered_map<int,int> MyMap;
     MyMap temp = p.getCustom_Container().search(word).getIds();
     for(MyMap::const_iterator it = temp.begin(); it != temp.end(); it++) {
         int key = it -> first;
-        cout <<"ids: " << (it->second) << endl;
+        cout << (it->second) << ", ";
     }
 
     cout << "Parsing " << " Time: " << milliseconds << " milliseconds" << std::endl;

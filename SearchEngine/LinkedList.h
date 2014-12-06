@@ -21,11 +21,10 @@ private:
             data = data1;
             next = next1;
         }
-        ~Node()
-        {
-            delete next;
-            next = nullptr;
-        }
+//        ~Node()
+//        {
+//            delete next;
+//        }
 
     public: // Member Functions
         void operator++(int)
@@ -56,7 +55,7 @@ public: // Constructor || Destructor
     ~LinkedList()
     {
         delete head;
-        head = nullptr;
+        //head = nullptr;
     }
 
 public : // Member Functions
@@ -100,10 +99,9 @@ public : // Member Functions
         // invoked when list not empty
         else
         {
-            Node *cur = head;
+            Node* cur = head;
             while (cur->next != nullptr)
             {
-                //cur->next->prev = cur;
                 cur = cur->next;
             }
             cur->next = nodePtr;

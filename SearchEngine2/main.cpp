@@ -4,12 +4,11 @@
 //#include <custom_container.h>
 #include <linkedlist_container.h>
 
-#define FILE_NUMBER 100;
-
 using namespace std;
 
 void quickSort(vector <string> &arr, int left, int right)
 {
+    cout << "flag " << endl;
     int i = left, j = right;
     string tmp;
     string pivot = arr[(left + right) / 2];
@@ -26,12 +25,14 @@ void quickSort(vector <string> &arr, int left, int right)
         }
         if (i <= j)
         {
+            cout << "flag " << endl;
             tmp = arr[i];
             arr[i] = arr[j];
             arr[j] = tmp;
             i++;
             j--;
         }
+
     }
     /* recursion */
     if (left < j)
@@ -47,7 +48,6 @@ int main(int argc, char** argv)
     Parser p;
     cout << "Parser Created" << endl;
     p.setupStopwords();
-    cout << "setupWords" << endl;
     //p.openFile(argv[5]);
     p.openFile("WikiDumpPart1.xml");
     cout << "File Opened" << endl;
@@ -83,20 +83,20 @@ int main(int argc, char** argv)
 //    }
 
     //cout << p.nodes.size() << endl;
-    for (int i = 130000; i < 130100; i++)
-    {
-        cout << p.getWords().at(i) << endl;
-    }
+//    for (int i = 130000; i < 130100; i++)
+//    {
+//        cout << p.getWords().at(i) << endl;
+//    }
 
     linkedlist_container lc;
     cout << "created container class" << endl;
     cout << "inserting words to container class..." << endl;
-//    for (int i = 0; i < p.getWords().size(); i++)
-//    {
-//        Node* temp = new Node(p.getWords().at(i), 1);
-//        lc.insert(temp);
-//        cout << "word " << i+1 << endl;
-//    }
+    for (int i = 0; i < p.getWords().size(); i++)
+    {
+        Node* temp = new Node(p.getWords().at(i), 1);
+        lc.insert(temp);
+        cout << "word " << i+1 << endl;
+    }
     cout << "done inserting!" << endl;
 
     end = std::chrono::system_clock::now();

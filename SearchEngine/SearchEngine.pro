@@ -6,7 +6,6 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     parser.cpp \
-    pugixml.cpp \
     page.cpp \
     indexinterface.cpp
 
@@ -15,8 +14,6 @@ HEADERS += \
     LinkedList.h \
     node.h \
     parser.h \
-    pugiconfig.hpp \
-    pugixml.hpp \
     avltree.h \
     page.h \
     stemmer.h \
