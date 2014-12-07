@@ -7,6 +7,7 @@ Parser::Parser()
 Parser::Parser(Container& container)
 {
     this->container = container;
+    totalPages = 0;
 }
 
 Parser::Parser(Container& container, ifstream& read)
@@ -64,11 +65,16 @@ bool Parser::readPage()
                             if (buffer == "username")
                             {
                                 page->setUsername(readContent(read, "username"));
-                                //cout << "username : " << page->getUsername() << endl;
+                                //cout << "username : " << page->getUsername() << " " << count << endl;
                             }
                             if (buffer == "timestamp")
                             {
-                                page->setDate(readContent(read, "date"));
+                                string date = readContent(read, "date");
+                                date.erase(date.begin() + 10, date.end());
+                                char del = '-';
+                                date.erase(remove(date.begin(), date.end(), del), date.end());
+                                int idate = stoi(date);
+                                page->setDate(idate);
                                 //cout << "date : " << page->getDate() << endl;
                             }
                             if (buffer == "id")
@@ -234,10 +240,35 @@ void Parser::readThrough()
         count += 1;
 
         readPage();
-        //pages.emplace(page->getId(), page);
+        pages.emplace(page->getId(), page);
 
         store();
     }
+    totalPages += count;
+
+}
+void Parser::readThrough(Container& container)
+{
+
+
+    count = 0;
+    while(!read.eof())
+    {
+        readPage();
+
+        unordered_map <int, Page*>::const_iterator got = pages.find(page->getId());
+        if (got == pages.end())
+        {
+            pages.emplace(page->getId(), page);
+            store(container);
+            count += 1;
+        }
+        //else
+            //cout << "page with id : " << page->getId() << " already exists" << endl;
+    }
+    cout << "total pages parsed and stored: " << count << endl;
+    totalPages += count;
+    cout << "total available pages: " << totalPages << endl;
 
 }
 string& Parser::getTitle()
@@ -259,6 +290,11 @@ void Parser::store()
     custom_strpbrk(page->getText(), delims, words);
 }
 
+void Parser::store(Container& container)
+{
+    custom_strpbrk(page->getText(), delims, words, container);
+}
+
 vector <string> &Parser::getWords()
 {
     return words;
@@ -268,15 +304,37 @@ Container &Parser::getContainer()
     return container;
 }
 
-void Parser::buildPages()
+void Parser::buildPageTable()
 {
     count = 0;
     while(!read.eof())
     {
         count += 1;
-
         readPage();
         pages.emplace(page->getId(), page);
     }
+    count -= 1;
+    cout << "pages parsed into pageTable: " << count << endl;
+    totalPages += count;
+    cout << "total pages available in pageTable: " << totalPages << endl;
 }
 
+void Parser::stem(string& word)
+{
+    string unstemmed = word;
+    unordered_map <string, string>::const_iterator got = stemWords.find(unstemmed);
+    if (got == stemWords.end())
+    {
+        Porter2Stemmer::stem(word);
+        stemWords.emplace(unstemmed, word);
+        //cout << unstemmed << ", " << word << " ";
+    }
+    else
+    {
+        word = got->second;
+        //cout << word << " is already STEMMED! ";
+    }
+
+
+
+}

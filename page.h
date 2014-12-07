@@ -11,22 +11,25 @@ private:
     string title;
     string text;
     string username;
-    string date;
+    int date;
     int id;
+    int wordCount;
 public:
     Page();
     string &getTitle();
     string &getText();
     string &getUsername();
-    string &getDate();
+    int getDate();
     int getId();
+    int getWordCount();
     void setTitle(string&);
     void setTitle(string);
-    void setUsername(string);
-    void setDate(string);
+    void setUsername(string);    
     void setText(string&);
     void setText(string text);
+    void setDate(int);
     void setId(int id);
+    void setWordCount(int wordCount);
 };
 
 #endif // PAGE_H

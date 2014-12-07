@@ -1,6 +1,6 @@
 #include "container.h"
 
-Container::Container()
+Container::Container() : IndexInterface()
 {
     wordcount = 0;  //take out later
     insertcount = 0;    //take out later
@@ -38,7 +38,8 @@ bool Container::contains(string word) {
 
 void Container::clearIndex()
 {
-
+    hash.clear();
+    cout << "Index Cleared." << endl;
 }
 
 unordered_map <string, Node> &Container::getHash()

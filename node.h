@@ -1,6 +1,5 @@
 #ifndef NODE_H
 #define NODE_H
-#include "LinkedList.h"
 #include <vector>
 #include <unordered_map>
 
@@ -9,7 +8,6 @@ class Node
 {
 private:
     string word;
-    //vector <int> ids;
     unordered_map<int, int> ids;
 public:
     Node(){}
@@ -52,15 +50,15 @@ public:
             return false;
     }
 
-    friend ostream& operator<<(ostream& out, Node& node)
-    {
-        out << node.word;
-        for (auto it = node.getIds().begin(); it != node.getIds().end(); ++it)
-        {
-            out << ", " << it->second;
-        }
-        return out;
-    }
+//    friend ostream& operator<<(ostream& out, Node& node)
+//    {
+//        out << node.word;
+//        for (auto it = node.getIds().begin(); it != node.getIds().end(); ++it)
+//        {
+//            out << ", " << it->second;
+//        }
+//        return out;
+//    }
 };
 
 #endif // NODE_H

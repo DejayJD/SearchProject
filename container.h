@@ -1,15 +1,14 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
-//#include "avltable.h"
 #include "avltree.h"
-//#include "hashtable.h"
 #include <unordered_map>
 #include <string>
 #include "node.h"
+#include "indexinterface.h"
 
 using namespace std;
-class Container
+class Container: protected IndexInterface
 {
 public:
     Container();
@@ -28,10 +27,8 @@ public:
     }
     unordered_map <string, Node> &getHash();
 
-    unordered_map <string, Node> hash;
-
 private:
-
+    unordered_map <string, Node> hash;
     int wordcount; //delete later
     int insertcount; //delete later
 };
