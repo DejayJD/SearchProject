@@ -1,7 +1,10 @@
 #ifndef INDEXINTERFACE_H
 #define INDEXINTERFACE_H
-#include <string>
+
+#include <iostream>
 #include "node.h"
+
+using namespace std;
 
 class IndexInterface
 {

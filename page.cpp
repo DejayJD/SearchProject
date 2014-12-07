@@ -5,6 +5,11 @@ Page::Page()
     id = 0;
 }
 
+Page::~Page()
+{
+
+}
+
 string &Page::getTitle()
 {
     return title;

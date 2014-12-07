@@ -17,10 +17,14 @@ public: // Constructor || Destructor
     ~FrequencyNode();
 
 public: // Member Functions
-    int getId();
-    int getFrequency() const;
     void incFrequency();
     void setId(int);
+
+public: // Getter || Setter
+    int getId();
+    int getFrequency() const;
+
+public: // Operator Overload
     friend ostream& operator<<(ostream& out, FrequencyNode node)
     {
         out << node.id << "," << node.frequency;

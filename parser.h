@@ -1,7 +1,6 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "avltree.h"
 #include "page.h"
 
 #include "container.h"
@@ -29,7 +28,6 @@ private: // Member Variables
     vector <string> words;
     string buffer;
     set<string> wordSet;
-
     Page* page;
     Container container;
 
@@ -48,28 +46,42 @@ public: // Constructor || Destructor
     Parser(Container&);
     Parser(Container&, ifstream&);
 
-public: // Member Functions
-    bool ReadConfig(char*);
-    bool setupStopwords();
-    void printPage();
-    void openFile(char* file);
-    void openFile(string file);
-    void closeFile();
-    bool readPage();
-    void readThrough();
-    void readThrough(Container& container);
+public: // Setters || Getters
+    int getTotalPages();
     string& getTitle();
     string& getText();
     set <string> &getWordSet();
     vector <string> &getWords();
+    void resetTotalPages();
 
+public: // Member Functions
+    // 1st Method Parsing
+    bool ReadConfig(char*);
+    // Reads and inserts stopwords to the set for comparing during parsing
+    bool setupStopwords();
+    // opens and close files for i/o
+    void openFile(char* file);
+    void openFile(string file);
+    void closeFile();
+
+    // prints title and text
+    void printPage();
+
+    // Reads in information between <page> and </page> in an xml file.
+    // and inserts it into a newly created Page object
+    bool readPage();
+
+    // Reads through the entire xml file
+    void readThrough();
+    void readThrough(Container& container);
+
+    // Page
     void store();
     void store(Container& container);
     Container &getContainer();
-
     void buildPageTable();
 
-private:
+private: // Member Functions
     string readContent(ifstream& read, string tag);
     string readText(ifstream& read);
     bool invalidChar (char c);

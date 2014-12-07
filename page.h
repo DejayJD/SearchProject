@@ -7,15 +7,17 @@ using namespace std;
 
 class Page
 {
-private:
+private: // Member Variables
     string title;
     string text;
     string username;
     int date;
     int id;
     int wordCount;
-public:
+public: // Constructor || Destructor
     Page();
+    ~Page();
+public: // Setters || Getters
     string &getTitle();
     string &getText();
     string &getUsername();

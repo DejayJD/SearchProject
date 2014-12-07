@@ -84,10 +84,8 @@ void Indexer::buildIndex(IndexInterface* ii)
         while (!fin.eof())
         {
             fin >> word;
-            //cout << word << " ";
             if (fin.eof()) break;
             fin >> sid;
-            //cout << sid << " ";
             while (sid != "!")
             {
                string delimiter = ",";
@@ -101,12 +99,10 @@ void Indexer::buildIndex(IndexInterface* ii)
                 }
                 int id = stoi(token);
                 int frequency = stoi(sid);
-                //cout << word << "," << id << "," << frequency << " ";
                 ii->insert(word, id, frequency);
                 fin >> sid;
             }
         }
-        cout < "out";
     }
 
     fin.close();

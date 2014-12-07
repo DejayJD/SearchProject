@@ -14,12 +14,14 @@ Node::Node(string& word, int id)
 {
     this->word = word;
     this->ids.emplace(id, FrequencyNode(id));
+    incCount();
 }
 
 Node::Node(string& word, int id, int frequency)
 {
     this->word = word;
     this->ids.emplace(id, FrequencyNode(id, frequency));
+    incCount();
 }
 
 Node::~Node()
@@ -59,12 +61,16 @@ void Node::insertId(int id)
 
     }
     else
+    {
         ids.emplace(id, FrequencyNode(id));
+        incCount();
+    }
 }
 
 void Node::insertId(int id, int frequency)
 {
-        ids.emplace(id, FrequencyNode(id, frequency));
+    ids.emplace(id, FrequencyNode(id, frequency));
+    incCount();
 }
 
 bool Node::exists(int id)
@@ -74,4 +80,14 @@ bool Node::exists(int id)
         return true;
     else
         return false;
+}
+
+int Node::getCount()
+{
+    return count;
+}
+
+void Node::incCount()
+{
+    count += 1;
 }

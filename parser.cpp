@@ -334,7 +334,14 @@ void Parser::stem(string& word)
         word = got->second;
         //cout << word << " is already STEMMED! ";
     }
+}
 
+int Parser::getTotalPages()
+{
+    return totalPages;
+}
 
-
+void Parser::resetTotalPages()
+{
+    this->totalPages = 0;
 }

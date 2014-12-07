@@ -10,12 +10,22 @@
 using namespace std;
 class Container : public IndexInterface
 {
-public:
+public: // Constructor || Destructor
     Container();
-    void insert(string, int);   //insert word with the id
-    void insert(string, int, int); // insert word with id and frequency
-    Node& search(string);       //search for the word
+    ~Container();
+public: // Member Function
+    // insert string as key, and id to unordered map
+    void insert(string, int);
+    // insert string as key, (id and frequency) => for FrequencyNode
+    void insert(string, int, int);
+
+    // search function
+    Node& search(string);
+
+    // checks if the container contains the word
     bool contains(string);
+
+    // clears container
     void clearIndex();
 
     int getwordcount()
@@ -27,12 +37,13 @@ public:
         return insertcount;
     }
 
-    unordered_map <string, Node> &getHash();
-
     unordered_map <string, Node> hash;
 
-private:
+public: // Setter || Getter
+    unordered_map <string, Node> &getHash();
 
+
+private:
     int wordcount; //delete later
     int insertcount; //delete later
 };

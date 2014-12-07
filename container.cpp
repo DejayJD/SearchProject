@@ -6,6 +6,11 @@ Container::Container()
     insertcount = 0;    //take out later
 }
 
+Container::~Container()
+{
+
+}
+
 void Container::insert(string word, int id)
 {
     if(contains(word))
