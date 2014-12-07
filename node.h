@@ -1,6 +1,5 @@
 #ifndef NODE_H
 #define NODE_H
-#include "LinkedList.h"
 #include "frequencynode.h"
 #include <vector>
 #include <unordered_map>

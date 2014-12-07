@@ -1,18 +1,19 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
+#include "indexinterface.h"
 #include "avltree.h"
 #include <unordered_map>
 #include <string>
 #include "node.h"
-#include "indexinterface.h"
 
 using namespace std;
-class Container: protected IndexInterface
+class Container : public IndexInterface
 {
 public:
     Container();
     void insert(string, int);   //insert word with the id
+    void insert(string, int, int); // insert word with id and frequency
     Node& search(string);       //search for the word
     bool contains(string);
     void clearIndex();
@@ -25,10 +26,13 @@ public:
     {
         return insertcount;
     }
+
     unordered_map <string, Node> &getHash();
 
-private:
     unordered_map <string, Node> hash;
+
+private:
+
     int wordcount; //delete later
     int insertcount; //delete later
 };

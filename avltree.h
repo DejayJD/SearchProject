@@ -148,7 +148,7 @@ private: // Member Functions
                  _insert(node->right, data);
                  if (height(node->right) - height(node->left) == 2)
                  {
-                     if (data->getWord() < node->right->data->getWord())
+                     if (data->getWord() > node->right->data->getWord())
                      {
                          rotateWithRightChild(node);
                      }

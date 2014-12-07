@@ -8,8 +8,9 @@ using namespace std;
 int main(int argc, char** argv)
 {
     SearchEngine se;
+    se.hashTable();
 //    string file = "WikiDumpPart3.xml";
-    string file = "enwikibooks-20141026-pages-meta-current.xml";
+    string file = "WikiBooks.xml";
 
     unsigned int totalMilliseconds = 0;
     //Parse time
@@ -27,10 +28,10 @@ int main(int argc, char** argv)
     cout << "Parsing " << " Time: " << milliseconds << " milliseconds" << std::endl;
 
 //    se.printIndex();
-    string sword = "Running";
+//    string sword = "Running";
 
-    se.search(sword);
-//    se.search("fontenot");
+//    se.search(sword);
+    se.search2("fontenot");
 
 //    string file2 = "xml.xml";
 //    se.store(file2);
@@ -41,12 +42,5 @@ int main(int argc, char** argv)
 
 //    se.search("fontenot");
 
-    se.displayPage(1);
-    se.displayPage(2);
-    se.clearSearch();
-    se.displayPage(2);
-
-    se.search("comedy");
-    se.displayPage(5);
     return 0;
 }

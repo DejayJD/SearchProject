@@ -29,7 +29,6 @@ private: // Member Variables
     vector <string> words;
     string buffer;
     set<string> wordSet;
-    AVLTree <string> avl;
 
     Page* page;
     Container container;

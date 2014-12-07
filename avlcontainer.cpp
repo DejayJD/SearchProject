@@ -15,6 +15,17 @@ void avlContainer::insert(string word, int id) {
         temp->insertId(id);
     }
 }
+void avlContainer::insert(string word, int id, int frequency) {
+    Node* temp = &search(word);
+    if(temp == nullptr) {
+        delete temp;
+        temp = new Node(word, id, frequency);
+        tree.insert(temp);
+    }
+    else {
+        temp->insertId(id, frequency);
+    }
+}
 
 Node& avlContainer::search(string word) {
     Node* temp = tree.search(word);

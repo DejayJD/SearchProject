@@ -8,6 +8,7 @@ class avlContainer: public IndexInterface
 {
 public:
     avlContainer();
+    void insert(string, int, int);
     void insert(string, int);
     Node& search(string);
     bool contains(string);

@@ -1,7 +1,11 @@
 #ifndef QUERY_H
 #define QUERY_H
 #include <iostream>
+#include <string>
+#include <vector>
+#include <sstream>
 
+using namespace std;
 struct qnode
 {
     qnode(int id, int freq, string date)

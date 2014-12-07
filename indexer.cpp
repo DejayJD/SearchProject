@@ -66,6 +66,52 @@ void Indexer::buildIndex(Container& container)
 
     fin.close();
 }
+
+void Indexer::buildIndex(IndexInterface* ii)
+{
+    indexInterface = ii;
+    ifstream fin;
+    fin.open("miniIndex.xml");
+    if(!fin.is_open())
+    {
+        cout << "File does not exits. Creating new index" << endl;
+    }
+    else
+    {
+        cout << "Reindexing from miniIndex to Container..." << endl;
+        string word;
+        string sid;
+        while (!fin.eof())
+        {
+            fin >> word;
+            //cout << word << " ";
+            if (fin.eof()) break;
+            fin >> sid;
+            //cout << sid << " ";
+            while (sid != "!")
+            {
+               string delimiter = ",";
+
+                size_t pos = 0;
+                string token;
+                while ((pos = sid.find(delimiter)) != string::npos)
+                {
+                    token = sid.substr(0, pos);
+                    sid.erase(0, pos + delimiter.length());
+                }
+                int id = stoi(token);
+                int frequency = stoi(sid);
+                //cout << word << "," << id << "," << frequency << " ";
+                ii->insert(word, id, frequency);
+                fin >> sid;
+            }
+        }
+        cout < "out";
+    }
+
+    fin.close();
+}
+
 void Indexer::createSmallIndex(Container& container)
 {
     ofstream fout("miniIndex.xml");

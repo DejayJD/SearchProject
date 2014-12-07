@@ -110,7 +110,8 @@ void SearchEngine::search(string word)
 
 void SearchEngine::rebuildIndex()
 {
-    i->buildIndex(container);
+    //i->buildIndex(container);
+    i->buildIndex(indexInterface);
 }
 
 void SearchEngine::printIndex()
@@ -126,7 +127,60 @@ void SearchEngine::buildPageTable(string file)
     p->closeFile();
 }
 
+void SearchEngine::search2(string word)
+{
+    if (arr.empty())
+    {
+        cout << "Searching for \"" << word << "\"" << endl;
+        transform(word.begin(), word.end(), word.begin(), ::tolower);
+        Porter2Stemmer::stem(word);
+        if(indexInterface->contains(word))
+        {
+            cout << "Pages containing \"" << word << "\" are titled :" << endl;
+            typedef unordered_map<int,FrequencyNode> MyMap;
+            MyMap temp = indexInterface->search(word).getIds();
+            for(MyMap::const_iterator it = temp.begin(); it != temp.end(); it++)
+            {
+                int key = it -> first;
+                //cout << (it->second) << ", ";
+                //searchPage(key);
+                FrequencyNode node = it -> second;
+                arr.push_back(node);
+            }
+            cout << "sorting in frequency..." << endl;
+            quickSort(arr, 0, arr.size()-1);
 
+            int max = 10;
+            if (arr.size() > max)
+            {
+                cout << "TOP " << max << " pages:" << endl;
+                for (int i = 0; i < max; i++)
+                {
+                    cout << i+1 << ". with frequency = " << arr[i].getFrequency() << ", ";
+                    searchPage(arr[i].getId());
+                }
+            }
+            else
+            {
+                cout << "TOP " << arr.size() << " page(s):" << endl;
+                for (int i = 0; i < arr.size(); i++)
+                {
+                    cout << i+1 << ". with frequency = " << arr[i].getFrequency() << ", ";
+                    searchPage(arr[i].getId());
+                }
+            }
+        }
+        else
+        {
+            cout << word << " isn't in Container!" << endl;
+        }
+    }
+    else
+    {
+        cout << "Please Clear Search Results first! <se.clearSearch()>" << endl;
+    }
+
+}
 //void SearchEngine::buildPages()
 //{
 //    ofstream fout("pages.xml");
@@ -240,4 +294,13 @@ void SearchEngine::clearSearch()
 {
     cout << "Clearing Search Results!" << endl;
     arr.clear();
+}
+
+void SearchEngine::hashTable() {
+    indexInterface = new Container();
+}
+
+void SearchEngine::avlTree()
+{
+    indexInterface = new avlContainer();
 }
