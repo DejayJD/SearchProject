@@ -84,11 +84,9 @@ public: // Member Functions
     // Reads through the entire xml file
     void readThrough();
     void readThrough(Container& container);
-    void readThrough(IndexInterface* indexInterface);
 
     // Page
     void store();
-    void store(Container& container);
     void store(IndexInterface* i);
     Container &getContainer();
     void buildPageTable();

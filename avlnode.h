@@ -6,7 +6,7 @@
 // An AVLTree Node
 class AVLNode
 {
-public: // Member Variables
+private: // Member Variables
     AVLNode *left, *right;
     Node* data;
     int height;

@@ -20,7 +20,7 @@ public: // Constructor || Destructor
 public: // Member Functions
     void clearIndex(Container& container);
     void clearIndex(IndexInterface* i);
-    void addWord(string, int);
+    void addWord(string&, int);
     // createSmallIndex Builds persistent index
     void createSmallIndex(Container& container);
     // buildIndex rebuilds index to the data structure in Memory

@@ -17,10 +17,10 @@ public: // Constructor || Destructor
     IndexInterface();
     virtual ~IndexInterface();
 public: // Member Functions
-    virtual Node& search(string) = 0;
-    virtual void insert(string, int) = 0;
-    virtual void insert(string, int, int) = 0;
-    virtual bool contains(string) = 0;
+    virtual Node& search(string&) = 0;
+    virtual void insert(string&, int) = 0;
+    virtual void insert(string&, int, int) = 0;
+    virtual bool contains(string&) = 0;
     virtual void clearIndex() = 0;
 
 };

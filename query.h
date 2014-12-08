@@ -42,7 +42,6 @@ public:
     Query();
     ~Query();
     void printResults(int, vector<QNode>); //print number of results by the integer
-    vector <QNode> processQueries(string query, int numresults, Container& container, unordered_map <int, Page*> &pages, int totalPages);
     vector <QNode> processQueries(string query, IndexInterface* container, unordered_map <int, Page*> &pages, int totalPages);
     void clear();
 
