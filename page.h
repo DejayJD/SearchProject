@@ -5,6 +5,11 @@
 
 using namespace std;
 
+// Page class stores every information of interest
+// that is relevant and related to the page in the xml that has
+// been parsed by the parser class. Page objects will be
+// accessed if there is a need to get information of pages in
+// the searchEngine
 class Page
 {
 private: // Member Variables

@@ -20,6 +20,7 @@ SearchEngine::~SearchEngine()
 {
     delete p;
     delete i;
+    delete indexInterface;
 }
 
 void SearchEngine::readXML()
@@ -31,7 +32,6 @@ void SearchEngine::store()
 {
     p->openFile("WikiDumpPart1.xml");
     cout << "File Opened" << endl;
-//    p.readThrough();
 
     readXML();
 
@@ -67,9 +67,6 @@ void SearchEngine::search(string word)
             MyMap temp = container.search(word).getIds();
             for(MyMap::const_iterator it = temp.begin(); it != temp.end(); it++)
             {
-                int key = it -> first;
-                //cout << (it->second) << ", ";
-                //searchPage(key);
                 FrequencyNode node = it -> second;
                 arr.push_back(node);
             }
@@ -110,7 +107,6 @@ void SearchEngine::search(string word)
 
 void SearchEngine::rebuildIndex()
 {
-    //i->buildIndex(container);
     i->buildIndex(indexInterface);
 }
 
@@ -173,7 +169,6 @@ void SearchEngine::quickSort(vector <FrequencyNode> &arr, int left, int right)
 
 void SearchEngine::quickSort(vector <QNode> &arr, int left, int right)
 {
-    //cout << "quicksort! ";
     int i = left, j = right;
     QNode tmp;
     QNode pivot = arr[(left + right) / 2];
@@ -211,6 +206,8 @@ void SearchEngine::clearIndex()
     cout << "clearing pageTable!" << endl;
     p->pages.clear();
     p->resetTotalPages();
+    arr.clear();
+
 }
 
 void SearchEngine::displayPage(int rank)
@@ -282,20 +279,16 @@ void SearchEngine::getQuery(string query, int list)
     try
     {
         qnodes = q.processQueries(query, indexInterface, p->pages, p->getTotalPages());
-        //qnodes = q.processQueries(query, list, container, p->pages, p->getTotalPages());
     }
     catch(const char* msg)
     {
         throw msg;
     }
-
-    //cout << qnodes.size();
 }
 
 void SearchEngine::sort()
 {
     cout << "Sorting..." << endl;
-    //cout << qnodes.size() << endl;
     quickSort(qnodes, 0, qnodes.size()-1);
 }
 
@@ -391,13 +384,15 @@ void SearchEngine::displayUsername(string username)
         cout << "there are " << count << " pages written by " << username << "!" << endl;
     }
 }
-void SearchEngine::hashTable() {
+bool SearchEngine::hashTable() {
     indexInterface = new Container();
+    return true;
 }
 
-void SearchEngine::avlTree()
+bool SearchEngine::avlTree()
 {
     indexInterface = new avlContainer();
+    return true;
 }
 
 void SearchEngine::search2(string word)
@@ -452,5 +447,4 @@ void SearchEngine::search2(string word)
     {
         cout << "" << endl;
     }
-
 }

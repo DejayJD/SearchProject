@@ -8,6 +8,11 @@
 #include "indexinterface.h"
 #include "avlcontainer.h"
 
+using namespace std;
+
+// SearchEngine is the driver class that operates the Parser,
+// Indexer, and Query processor. It also sorts the QNodes given
+// by the Query processor based on tfidf and outputs it to the user.
 class SearchEngine
 {
 private: // Member Variables
@@ -56,8 +61,8 @@ public: // Member Functions
     bool printSearchResult();
     void getPageRank(int);
     void displayUsername(string username);
-    void avlTree();//
-    void hashTable();//
+    bool avlTree();//
+    bool hashTable();//
 };
 
 #endif // SEARCHENGINE_H

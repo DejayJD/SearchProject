@@ -5,6 +5,8 @@
 
 using namespace std;
 
+// This class is used to store and rebuild the inverse index with
+// frequency value still attached to it
 class FrequencyNode
 {
 private: // Member Variables

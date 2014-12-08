@@ -5,6 +5,7 @@
 #include <sstream>
 #include <cmath>
 #include <algorithm>
+
 #include "porter2stemmer.h"
 
 #include "container.h"
@@ -15,6 +16,10 @@
 
 using namespace std;
 
+// Query class accepts queries from users and parses them
+// It will determine which pages are most relevant to the user
+// through all the keywords. It will return a vector of QNodes
+// of relevant pages to be further sorted in the searchEngine
 class Query
 {
 private:

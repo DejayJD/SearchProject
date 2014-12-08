@@ -13,7 +13,6 @@ Parser::Parser(Container& container)
 Parser::Parser(Container& container, ifstream& read)
 {
     this->container = container;
-    //this->read = read;
 }
 
 bool Parser::readPage()
@@ -35,12 +34,10 @@ bool Parser::readPage()
                     tag.push_back(c);
                     c = read.get();
                 }
-                //cout << buffer << endl;
 
                 // READS ONE PAGE
                 if (tag == "page")
                 {
-                    //cout << "in page!" << endl;
                     page = new Page();
                     while (buffer != "/page")
                     {
@@ -60,12 +57,10 @@ bool Parser::readPage()
                             if (buffer == "title")
                             {
                                 page->setTitle(readContent(read, "title"));
-                                //cout << "title : " << page->getTitle() << endl;
                             }
                             if (buffer == "username")
                             {
                                 page->setUsername(readContent(read, "username"));
-                                //cout << "username : " << page->getUsername() << " " << count << endl;
                             }
                             if (buffer == "timestamp")
                             {
@@ -75,7 +70,6 @@ bool Parser::readPage()
                                 date.erase(remove(date.begin(), date.end(), del), date.end());
                                 int idate = stoi(date);
                                 page->setDate(idate);
-                                //cout << "date : " << page->getDate() << endl;
                             }
                             if (buffer == "id")
                             {
@@ -83,7 +77,6 @@ bool Parser::readPage()
                                 {
                                     page->setId(stoi(readContent(read, "id")));
                                 }
-                                //cout << "id : " << page->getId() << endl;
                             }
 
                             if (buffer.find("text") != std::string::npos && !(buffer.find("/text") != std::string::npos))
@@ -188,23 +181,6 @@ string Parser::readText(ifstream& read)
             }
             c = read.get();
         }
-//        if (c == '&')
-//        {
-//            c = read.get();
-//            if (c == 'g' || c == 'l' || c == 'q' || c == 'a')
-//            {
-//                while (c != ';')
-//                {
-//                    c = read.get();
-//                }
-//                c = read.get();
-//            }
-//            else
-//            {
-//                break;
-//            }
-//            c = read.get();
-//        }
         text.push_back(c);
         c = read.get();
 
@@ -249,8 +225,6 @@ void Parser::readThrough()
 }
 void Parser::readThrough(Container& container)
 {
-
-
     count = 0;
     while(!read.eof())
     {
@@ -263,14 +237,32 @@ void Parser::readThrough(Container& container)
             store(container);
             count += 1;
         }
-        //else
-            //cout << "page with id : " << page->getId() << " already exists" << endl;
     }
     cout << "total pages parsed and stored: " << count << endl;
     totalPages += count;
     cout << "total available pages: " << totalPages << endl;
-
 }
+
+void Parser::readThrough(IndexInterface* indexInterface)
+{
+    this->indexInterface = indexInterface;
+    count = 0;
+    while(!read.eof())
+    {
+        readPage();
+        unordered_map <int, Page*>::const_iterator got = pages.find(page->getId());
+        if (got == pages.end())
+        {
+            pages.emplace(page->getId(), page);
+            store(indexInterface);
+            count += 1;
+        }
+    }
+    cout << "total pages parsed and stored: " << count << endl;
+    totalPages += count;
+    cout << "total available pages: " << totalPages << endl;
+}
+
 string& Parser::getTitle()
 {
     return page->getTitle();
@@ -293,6 +285,11 @@ void Parser::store()
 void Parser::store(Container& container)
 {
     custom_strpbrk(page->getText(), delims, words, container);
+}
+
+void Parser::store(IndexInterface* i)
+{
+    custom_strpbrk(page->getText(), delims, words, i);
 }
 
 vector <string> &Parser::getWords()
@@ -327,12 +324,10 @@ void Parser::stem(string& word)
     {
         Porter2Stemmer::stem(word);
         stemWords.emplace(unstemmed, word);
-        //cout << unstemmed << ", " << word << " ";
     }
     else
     {
         word = got->second;
-        //cout << word << " is already STEMMED! ";
     }
 }
 

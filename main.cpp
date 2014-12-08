@@ -1,18 +1,12 @@
 #include <iostream>
 #include <chrono>
 #include "searchengine.h"
-//#include "stemmer.h"
-//#include "stem.h"
-//#include "query.h"
+
 using namespace std;
 
 int main(int argc, char** argv)
 {
     SearchEngine se;
-//    string file = "enwikibooks-20141026-pages-meta-current.xml";
-
-//    se.buildPageTable(file); // builds the Page Hash Table
-//    se.rebuildIndex();      // builds index from inverted index
 
     int choice;
     do
@@ -35,8 +29,9 @@ int main(int argc, char** argv)
             {
                 cout << "What would you like to do?" << endl;
                 cout << "1. Clear Index" << endl;
-                cout << "2. Add Page(s)" << endl;
+                cout << "2. Store" << endl;
                 cout << "3. Print Index" << endl;
+                cout << "4. Search a word in the temporary Data Structure" << endl;
                 cout << "-1. to exit" << endl;
 
                 cin >> mChoice;
@@ -44,7 +39,7 @@ int main(int argc, char** argv)
                     se.clearIndex();
                 }
                 else if(mChoice == 2) {
-                    cout << "What is the name of the file to store to?" << endl;
+                    cout << "What is the name of the file to store?" << endl;
                     string fileString;
                     cin >> fileString;
                     se.store(fileString);
@@ -52,13 +47,21 @@ int main(int argc, char** argv)
                 else if(mChoice == 3) {
                     se.printIndex();
                 }
+                else if(mChoice ==4)
+                {
+                    cout << "word to search" << endl;
+                    string word;
+                    cin >> word;
+                    se.search(word);
+                }
                 else if (mChoice == -1)
                 {
-                    cout << "Leaving Maintanance Mode..." << endl;
+                    cout << "Leaving Maintenance Mode..." << endl;
+                    break;
                 }
                 else
                 {
-                    cout << "Choose between <1-3>" << endl;
+                    cout << "Choose between <1-4>" << endl;
                 }
             }   while (mChoice != -1);
 
@@ -69,6 +72,7 @@ int main(int argc, char** argv)
         else if (choice == 2) // Interactive Mode
         {
             cout << "Starting Interactive Mode!" << endl;
+            //se.clearIndex();
 
             cout << "AVLTree of HashTable as Data Structure?" << endl;
             cout << "1. AVLTree" << endl
@@ -97,12 +101,13 @@ int main(int argc, char** argv)
                 }
             }
 
+            // THIS WILL BE THE XML PAGES THAT CAN BE ACCESSED
+            string file = "WikiBooks.xml";
 
-            //se.clearIndex();
-            string file = "Wikibooks.xml";
-
-            se.buildPageTable(file); // builds the Page Hash Table
-            se.rebuildIndex();      // builds index from inverted index
+            // builds the Page HashTable
+            se.buildPageTable(file);
+            // builds index from inverted index
+            se.rebuildIndex();
             string query;
             int rank;
             do
@@ -143,7 +148,69 @@ int main(int argc, char** argv)
         }
         else if (choice == 3) // Stress Test Mode
         {
-            cout << "Starting Stress Test Mode!" << endl;
+            string filename;
+            cout << "Starting Stress Test Mode!\nEnter Thine Filename: ";
+            cin >> filename;
+            ifstream fin(filename.c_str());
+            chrono::time_point<chrono::system_clock> start, end;
+            start = chrono::system_clock::now();
+            while (!fin.eof())
+            {
+                cout << "Reading file" << endl;
+                string temp;
+                fin >> temp;
+                if (temp=="LoadAVL") //DONE
+                {
+                    cout << "Loading index into AVL structure: " << endl;
+                    se.avlTree();
+                    cout << "AVLTree is constructed!" << endl;
+                }
+                if (temp=="LoadHash") //DONE
+                {
+                    cout << "Loading index into Hash: " << temp << endl;
+                    se.hashTable();
+                    cout << "AVLTree is constructed!" << endl;
+                }
+                if (temp=="BuildIndex") //DONE
+                {
+                    fin >> temp;
+                    se.buildPageTable(temp); // builds the Page Hash Table
+                    se.rebuildIndex();      // builds index from inverted index
+                    cout << "Index is built" << endl;
+                }
+                if (temp=="AddFile") //DONE
+                {
+                    fin >> temp;
+                    se.store(temp);
+                    cout << "Added index: " << temp << endl;
+                }
+                if (temp=="ClearIndex")//DONE
+                {
+                    se.clearIndex();
+                    cout << "Cleared index" << endl;
+                }
+                if (temp=="Query") //DONE
+                {
+                    fin.ignore();
+                    getline(fin, temp);
+                    se.getQuery(temp, 10);
+                    se.sort();
+                    se.printSearchResult();
+                }
+                if (temp=="FindPage") //DONE
+                {
+                    fin >> temp;
+                    cout << "Finding page with rank: " << endl;
+                    se.getPageRank(stoi(temp));
+                }
+                if (temp=="PrintIndex") // Done
+                {
+                    se.printIndex();
+                }
+            }
+            end = chrono::system_clock::now();
+            chrono::duration<double> elapsed_seconds = end - start;
+            cout << "Stress Test time result: " << elapsed_seconds.count() << endl;
 
         }
         else if (choice == -1)
@@ -155,6 +222,11 @@ int main(int argc, char** argv)
             cout << "Please choose between <1-3>" << endl;
         }
     }   while(choice != -1);
+
+
+
+
+
 
 
     return 0;

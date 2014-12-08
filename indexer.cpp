@@ -12,13 +12,17 @@ Indexer::Indexer(Container& container)
 Indexer::Indexer(Container& container, ifstream& read)
 {
     this->container = container;
-   // this->read = read;
 }
 
 void Indexer::clearIndex(Container& container)
 {
     container.clearIndex();
     return;
+}
+
+void Indexer::clearIndex(IndexInterface* i)
+{
+    i->clearIndex();
 }
 
 void Indexer::addWord(string word, int pageID)

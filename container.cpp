@@ -2,8 +2,8 @@
 
 Container::Container()
 {
-    wordcount = 0;  //take out later
-    insertcount = 0;    //take out later
+    wordcount = 0;
+    insertcount = 0;
 }
 
 Container::~Container()

@@ -7,6 +7,10 @@
 #include <string>
 #include "node.h"
 
+// This class is an hashtable data structure that will implement
+// the reverse index obtained from the persistent index.
+// This class will is a child class of IndexInterface so the
+// user can choose between hashtable and avltree
 using namespace std;
 class Container : public IndexInterface
 {

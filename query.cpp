@@ -7,10 +7,9 @@ Query::Query()
 
 Query::~Query()
 {
-    //qresults.clear();
+
 }
 
-//TODO: Get container stuff:
 vector <QNode> Query::getContainerInfo(string in)
 {
     transform(in.begin(), in.end(), in.begin(), ::tolower);
@@ -25,7 +24,6 @@ vector <QNode> Query::getContainerInfo(string in)
         int id = it -> first;
         QNode temp(id, it->second.getFrequency(), searchGetPage(id)->getDate());
         temp.setTfidf(temp.getfreq()*log10(totalPages/n));
-        //cout << temp.getTfidf() << " ";
         newVec.push_back(temp);
     }
     return newVec;
@@ -45,7 +43,6 @@ vector <QNode> Query::getContainerInfo2(string in)
         int id = it -> first;
         QNode temp(id, it->second.getFrequency(), searchGetPage(id)->getDate());
         temp.setTfidf(temp.getfreq()*log10(totalPages/n));
-        //cout << temp.getTfidf() << " ";
         newVec.push_back(temp);
     }
     return newVec;
@@ -59,19 +56,19 @@ void Query::printResults(int num, vector <QNode> qresults)
     {
         cout << "No results were found :(" << endl;
     }
-    for (int i=0; i<num; i++) //Go through the vector and print it out
+    //Go through the vector and print it out
+    for (int i=0; i<num; i++)
     {
         if (i<qresults.size())
             cout << "Titles : " << searchGetPage(qresults[i].id)->getTitle() << endl;
         else
             break;
     }
-    //qresults.clear(); //Reset the array for another
     cout << endl;
     return;
 }
 
-//FINISHED: Command operations (AND/OR/NOT/DATELT/DATEGT)
+// Command operations (AND/OR/NOT/DATELT/DATEGT)
 vector<QNode> Query::queryAnd(vector<QNode> left, vector<QNode> right)
 {
     vector<QNode> newVec;
@@ -276,8 +273,6 @@ vector <QNode> Query::processQueries(string query, int numresults, Container& co
         persistentVec=queryLt(persistentVec, idate);
         counter+=2;
     }
-    //printResults(numresults, persistentVec);
-    //cout << persistentVec.size();
     if(persistentVec.size() == 0)
         throw "No Results";
     return persistentVec;
@@ -421,8 +416,6 @@ vector <QNode> Query::processQueries(string query, IndexInterface* container,
         persistentVec=queryLt(persistentVec, idate);
         counter+=2;
     }
-    //printResults(numresults, persistentVec);
-    //cout << persistentVec.size();
     if(persistentVec.size() == 0)
         throw "No Results";
     return persistentVec;

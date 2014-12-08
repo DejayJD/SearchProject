@@ -56,7 +56,6 @@ void Node::insertId(int id)
         else
         {
             got->second.incFrequency();
-            //cout << got->second << " ";
         }
 
     }
@@ -84,7 +83,7 @@ bool Node::exists(int id)
 
 int Node::getCount()
 {
-    return count;
+    return ids.size();
 }
 
 void Node::incCount()

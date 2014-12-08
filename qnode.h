@@ -1,6 +1,11 @@
 #ifndef QNODE_H
 #define QNODE_H
 
+using namespace std;
+
+// QNode is the a Node that contains data relevant to
+// query processing. It also contains tfidf which is used
+// to sort the query result
 class QNode
 {
 private: // Member Variables

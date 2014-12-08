@@ -4,6 +4,8 @@
 #include "page.h"
 
 #include "container.h"
+#include "avlcontainer.h"
+#include "indexinterface.h"
 #include "porter2stemmer.h"
 
 #include <bitset>
@@ -18,7 +20,13 @@
 
 using namespace std;
 
-
+// Parser is a custom xml parser that reads xml pages while gathering
+// information of interest and storing them to page objects. The parser
+// also gets each word of the text and stores them in a temporary container
+// which is then used to create the persistent index by the indexer.
+// It also parses through the xml file and creates a dictionary (hashtable)
+// of all the xml pages that has been parsed which can be accessed with ids
+// of each page.
 class Parser
 {
 private: // Member Variables
@@ -32,6 +40,8 @@ private: // Member Variables
     Container container;
 
     int totalPages;
+
+    IndexInterface* indexInterface;
 
     unordered_map <string, string> stemWords;
 
@@ -74,10 +84,12 @@ public: // Member Functions
     // Reads through the entire xml file
     void readThrough();
     void readThrough(Container& container);
+    void readThrough(IndexInterface* indexInterface);
 
     // Page
     void store();
     void store(Container& container);
+    void store(IndexInterface* i);
     Container &getContainer();
     void buildPageTable();
 
@@ -122,6 +134,27 @@ private: // Templated Function
             {
                 count += 1;
                 container.insert(data, page->getId());
+            }
+            p = q + 1;
+        }
+        page->setWordCount(count);
+        //cout << page->getWordCount() << endl;
+    }
+    template<typename C>
+    void custom_strpbrk(string const& s, char const* delims, C& ret, IndexInterface* container)
+    {
+        int count = 0;
+        char const* p = s.c_str();
+        char const* q = strpbrk(p+1, delims);
+        for( ; q != NULL; q = strpbrk(p, delims) )
+        {
+            string data = typename C::value_type(p, q);
+            transform(data.begin(), data.end(), data.begin(), ::tolower);
+            stem(data);
+            if (data.size() > 2 && data.size() < 30 && wordSet.count(data) == 0)
+            {
+                count += 1;
+                container->insert(data, page->getId());
             }
             p = q + 1;
         }

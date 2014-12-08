@@ -4,8 +4,11 @@
 #include <vector>
 #include <unordered_map>
 
-
 using namespace std;
+
+// Node class is the node of the container classes. This node contains both
+// the name of the word, the page ids associated with the word, and the frequency
+// of that word in a particular page
 class Node
 {
 private: // Member Variables
