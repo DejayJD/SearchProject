@@ -1,0 +1,31 @@
+Stress Test Documentation
+-------------------------
+
+LoadAVL
+-Selects the option of using an AVL tree for a container
+
+LoadHash
+-Selects the option of using a Hash Table for a container
+-NOTE One of these must be called before adding and creating an index
+
+BuildIndex <filepath
+-Creates an index from a string ending in .xml in <filepath>
+
+AddFile <filepath>
+-Adds an additional XML file onto the previous index 
+-Creates from a string ending in .xml <filepath>
+
+ClearIndex
+-Clears out the index
+
+Query <query>
+-Selects and searches for specified string in <query>
+-Usage: One word query or multiple words
+-For multiple words: AND/OR ... NOT(optional) ... DATEGT(optional) ... DATELT(optional) ...
+
+FindPage <page>
+-Searches for a page with the string specified in <page> 
+-Searches from the results of a query
+
+PrintIndex
+-Creates a persistent index file in file directory named "miniIndex.xml"
