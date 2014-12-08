@@ -1,0 +1,10 @@
+digraph "C:/Qt" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_49430c0ec1c4d44bb95ffbb0c7a74747 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_49430c0ec1c4d44bb95ffbb0c7a74747.html"];
+    dir_49430c0ec1c4d44bb95ffbb0c7a74747 [shape=plaintext label="Qt"];
+    dir_896ff02a94237360db36ee187912cf14 [shape=box label="Tools" color="red" fillcolor="white" style="filled" URL="dir_896ff02a94237360db36ee187912cf14.html"];
+  }
+}

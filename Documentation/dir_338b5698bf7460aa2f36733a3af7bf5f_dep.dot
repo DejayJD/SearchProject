@@ -1,0 +1,13 @@
+digraph "C:/Qt/Tools/QtCreator" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_896ff02a94237360db36ee187912cf14 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Tools" fontname="Helvetica", fontsize="10", URL="dir_896ff02a94237360db36ee187912cf14.html"]
+  subgraph clusterdir_338b5698bf7460aa2f36733a3af7bf5f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_338b5698bf7460aa2f36733a3af7bf5f.html"];
+    dir_338b5698bf7460aa2f36733a3af7bf5f [shape=plaintext label="QtCreator"];
+    dir_99407e0c97fc2bdd4f27d021913ba227 [shape=box label="bin" color="red" fillcolor="white" style="filled" URL="dir_99407e0c97fc2bdd4f27d021913ba227.html"];
+  }
+  }
+}
